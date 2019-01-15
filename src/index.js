@@ -1,19 +1,30 @@
-import {cube} from './math';
-console.log('-------------------------------------------------')
-console.log(process.env.NODE_ENV)
-console.log('-------------------------------------------------')
-if(process.env.NODE_ENV !== 'production') {
-  console.log('-------------------------------------------------')
-  console.log('dev modes');
-}
+
+
 function component() {
   var element = document.createElement('pre');
   // Lodash, now imported by this script
-  element.innerHTML = [
-    'hello webpack',
-    '5 cubed is equal to ' + cube(5)
-  ]
-  return element;
+  return import( /* webpackChunkName: "lodash" */ 'lodash').then(_ => {
+    var element = document.createElement('div');
+
+    element.innerHTML = _.join(['Hello', 'webpack'], ' ');
+
+    return element;
+
+  }).catch(error => 'An error occurred while loading the component');
 }
 
-document.body.appendChild(component());
+function active() {
+  component().then(component => {
+    console.log(component);
+    document.body.appendChild(component);
+  })
+}
+function button() {
+  var button = document.createElement("button");
+  button.innerHTML = 'click';
+
+  button.onclick = active;
+
+  document.body.appendChild(button);
+}
+button();

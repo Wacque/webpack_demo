@@ -5,8 +5,7 @@
   "private": true,
   "sideEffects": false,
   "scripts": {
-    "build": "webpack --config webpack.pro.js",
-    "start": "webpack-dev-server --open --config webpack.dev.js"
+    "build": "webpack --config webpack.config.js"
   },
   "keywords": [],
   "author": "",
